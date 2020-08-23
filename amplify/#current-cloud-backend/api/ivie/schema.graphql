@@ -1,0 +1,72 @@
+type User @model(subscriptions: null)
+  @key(fields: ["userId"])
+  @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
+  userId: ID!
+  posts: [Post] @connection(keyName: "postByUser", fields: ["userId"])
+  createdAt: String
+  updatedAt: String
+  owner: String
+}
+
+type Post @model
+  @key(name: "postByUser", fields: ["authorId", "createdAt"])
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId" },
+    { allow: public, operations: [read] },
+    { allow: private, operations: [read] }
+  ]){
+  id: ID!
+  authorId: ID!
+  author: User @connection(fields: ["authorId"])
+  postContent: String
+  translations: [Translation] @connection(keyName: "translationsByPostId", fields: ["id"])
+  createdAt: String
+  owner: String
+}
+
+type Translation @model
+  @key(name: "translationsByPostId", fields: ["postId"])
+  @auth(rules: [
+    { allow: owner, ownerField: "authorId" },
+    { allow: public, operations: [read] },
+    { allow: private, operations: [read] }
+  ]) {
+  id: ID!
+  authorId: ID!
+  postId: ID!
+  translationIvie: String!
+  translationSound: String
+  exampleIvie: String
+  exampleEnglish: String
+  author: User @connection(fields: ["authorId"])
+  votes: [TranslationVote] @connection(keyName: "votesByTranslationId", fields: ["id"])
+  post: Post @connection(fields: ["postId"])
+  voteCount: Int
+  owner: String
+}
+
+type TranslationVote @model
+  @auth(rules: [
+    { allow: owner, ownerField: "userId"},
+    { allow: public, operations: [read] },
+    { allow: private, operations: [read] }
+  ])
+  @key(name: "votesByTranslationId", fields: ["translationId"]) {
+  id: ID!
+  userId: ID!
+  translationId: ID!
+  translation: Translation @connection(fields: ["translationId"])
+  createdAt: String!
+  vote: VoteType
+  owner: String
+}
+
+input VoteInput {
+  type: VoteType!
+  id: ID!
+}
+
+enum VoteType {
+  up
+  down
+}

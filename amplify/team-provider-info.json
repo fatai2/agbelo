@@ -1,0 +1,21 @@
+{
+    "demo": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-ivie-demo-124531-authRole",
+            "UnauthRoleArn": "arn:aws:iam::131940184244:role/amplify-ivie-demo-124531-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::131940184244:role/amplify-ivie-demo-124531-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-ivie-demo-124531-deployment",
+            "UnauthRoleName": "amplify-ivie-demo-124531-unauthRole",
+            "StackName": "amplify-ivie-demo-124531",
+            "StackId": "arn:aws:cloudformation:eu-west-1:131940184244:stack/amplify-ivie-demo-124531/be99bdd0-c9bd-11ea-afe2-0ae6572120e6",
+            "AmplifyAppId": "d36mzjinv30f3i"
+        },
+        "categories": {
+            "auth": {
+                "ivie82b5e6c0": {},
+                "userPoolGroups": {}
+            }
+        }
+    }
+}

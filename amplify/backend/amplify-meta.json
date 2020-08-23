@@ -1,0 +1,147 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-ivie-demo-124531-authRole",
+            "UnauthRoleArn": "arn:aws:iam::131940184244:role/amplify-ivie-demo-124531-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::131940184244:role/amplify-ivie-demo-124531-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "amplify-ivie-demo-124531-deployment",
+            "UnauthRoleName": "amplify-ivie-demo-124531-unauthRole",
+            "StackName": "amplify-ivie-demo-124531",
+            "StackId": "arn:aws:cloudformation:eu-west-1:131940184244:stack/amplify-ivie-demo-124531/be99bdd0-c9bd-11ea-afe2-0ae6572120e6",
+            "AmplifyAppId": "d36mzjinv30f3i"
+        }
+    },
+    "function": {
+        "ivie82b5e6c0CustomMessage": {
+            "service": "Lambda",
+            "providerPlugin": "awscloudformation",
+            "build": true,
+            "output": {
+                "Region": "eu-west-1",
+                "Arn": "arn:aws:lambda:eu-west-1:131940184244:function:ivie82b5e6c0CustomMessage-demo",
+                "Name": "ivie82b5e6c0CustomMessage-demo",
+                "LambdaExecutionRole": "ivie82b5e6c0CustomMessage-demo"
+            },
+            "lastPushTimeStamp": "2020-08-17T21:40:04.338Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-ivie-demo-124531-deployment/amplify-cfn-templates/function/ivie82b5e6c0CustomMessage-cloudformation-template.json",
+                "logicalId": "functionivie82b5e6c0CustomMessage"
+            }
+        },
+        "ivie82b5e6c0PostConfirmation": {
+            "service": "Lambda",
+            "providerPlugin": "awscloudformation",
+            "build": true,
+            "output": {
+                "Region": "eu-west-1",
+                "Arn": "arn:aws:lambda:eu-west-1:131940184244:function:ivie82b5e6c0PostConfirmation-demo",
+                "Name": "ivie82b5e6c0PostConfirmation-demo",
+                "LambdaExecutionRole": "ivie82b5e6c0PostConfirmation-demo"
+            },
+            "lastPushTimeStamp": "2020-08-17T21:40:04.346Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-ivie-demo-124531-deployment/amplify-cfn-templates/function/ivie82b5e6c0PostConfirmation-cloudformation-template.json",
+                "logicalId": "functionivie82b5e6c0PostConfirmation"
+            }
+        }
+    },
+    "auth": {
+        "ivie82b5e6c0": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [
+                {
+                    "category": "function",
+                    "resourceName": "ivie82b5e6c0CustomMessage",
+                    "triggerProvider": "Cognito",
+                    "attributes": [
+                        "Arn",
+                        "Name"
+                    ]
+                },
+                {
+                    "category": "function",
+                    "resourceName": "ivie82b5e6c0PostConfirmation",
+                    "triggerProvider": "Cognito",
+                    "attributes": [
+                        "Arn",
+                        "Name"
+                    ]
+                }
+            ],
+            "output": {
+                "AppClientSecret": "ipvdfpbb4b067s0e520bp3tvqllkuniuqd7o097ur17si3n3e10",
+                "UserPoolId": "eu-west-1_Z2bt9blCB",
+                "AppClientIDWeb": "7jbuoo2ivb6bu410pgduiiqq08",
+                "AppClientID": "1j77ts615fsbpuv5bk9u90r5gt",
+                "IdentityPoolId": "eu-west-1:179e6a55-fdca-4cbb-81f9-463a74a92d0c",
+                "IdentityPoolName": "ivie82b5e6c0_identitypool_82b5e6c0__demo",
+                "UserPoolName": "ivie82b5e6c0_userpool_82b5e6c0"
+            },
+            "lastPushTimeStamp": "2020-08-17T21:40:04.348Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-ivie-demo-124531-deployment/amplify-cfn-templates/auth/ivie82b5e6c0-cloudformation-template.yml",
+                "logicalId": "authivie82b5e6c0"
+            }
+        },
+        "userPoolGroups": {
+            "service": "Cognito-UserPool-Groups",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [
+                {
+                    "category": "auth",
+                    "resourceName": "ivie82b5e6c0",
+                    "attributes": [
+                        "UserPoolId",
+                        "AppClientIDWeb",
+                        "AppClientID",
+                        "IdentityPoolId"
+                    ]
+                }
+            ],
+            "output": {
+                "userGroupRole": "arn:aws:iam::131940184244:role/eu-west-1_Z2bt9blCB-userGroupRole"
+            },
+            "lastPushTimeStamp": "2020-08-17T21:40:04.351Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-ivie-demo-124531-deployment/amplify-cfn-templates/auth/template.json",
+                "logicalId": "authuserPoolGroups"
+            }
+        }
+    },
+    "api": {
+        "ivie": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "additionalAuthenticationProviders": [
+                        {
+                            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+                            "userPoolConfig": {
+                                "userPoolId": "authivie82b5e6c0"
+                            }
+                        }
+                    ],
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY",
+                        "apiKeyConfig": {
+                            "description": "365",
+                            "apiKeyExpirationDays": "365"
+                        }
+                    }
+                },
+                "GraphQLAPIIdOutput": "hyavyplxyfhmrgqznk362uzomy",
+                "GraphQLAPIEndpointOutput": "https://soawsurwkncpxfxn2bqshgdnoy.appsync-api.eu-west-1.amazonaws.com/graphql",
+                "GraphQLAPIKeyOutput": "da2-ximslazvhbfpfmdfdutnj7loxi"
+            },
+            "lastPushTimeStamp": "2020-08-17T21:40:04.353Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-ivie-demo-124531-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+                "logicalId": "apiivie"
+            },
+            "lastPushDirHash": "fzz7PLEBUQFPXjZ5Hb5A4bRR89w="
+        }
+    }
+}
